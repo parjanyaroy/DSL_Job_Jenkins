@@ -1,25 +1,11 @@
-// MyProject-Build.groovy
-
-def gitUrl = "https://github.com/parjanyaroy/springhibernate.git"
-
-job("MyProject-Build") {
-    description "Builds MyProject from master branch."
-    parameters {
-        stringParam('COMMIT', 'HEAD', 'Commit to build')
-    }
-    scm {
-        git {
-            remote {
-                url gitUrl.
-                branch "origin/master"
-            }
-            extensions {
-                wipeOutWorkspace()
-                localBranch master
-            }
+def giturl = 'https://github.com/quidryan/aws-sdk-test.git'
+for(i in 0..10) {
+    job("DSL-Tutorial-1-Test-${i}") {
+        scm {
+            git(giturl)
         }
-    }
-    steps {
-        shell "Look: I'm building master!"
+        steps {
+            maven("test -Dtest.suite=${i}")
+        }
     }
 }
